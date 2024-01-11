@@ -15,10 +15,34 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: '3.16.0'
-      - run: flutter pub get
-      - run: flutter build apk --split-per-abi
-      - name: Create a Release APK
-        uses: softprops/action-gh-release@v1
-        with:
-          artifacts: 'test.apk'
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build APK
+      run: flutter build apk
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release
+        path: build/
+        if-no-files-found: error # Sẽ hiển thị lỗi nếu không tìm thấy file APK
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: app-release
+        path: build/
+
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/app/outputs/flutter-apk/app-release.apk
+        token: ${{ secrets.GITHUB_TOKEN }}s
