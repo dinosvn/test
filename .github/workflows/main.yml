@@ -15,10 +15,6 @@ jobs:
       - run: flutter pub get
       - run: flutter test
       - run: flutter build apk --split-per-abi
-      - name: Create Tag
-      - run: git tag -a v${{ github.run_number }} -m "Release version v${{ github.run_number }}"
-      - name: Push Tag
-      - run: git push origin v${{ github.run_number }}
       - name: Create a Release APK
         uses: softprops/action-gh-release@v1
         with:
