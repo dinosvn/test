@@ -18,4 +18,4 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           artifacts: 'build/app/outputs/apk/debug/*.apk'
-          token: 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
+          token: ${{ secrets.test }}
