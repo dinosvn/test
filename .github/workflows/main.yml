@@ -1,7 +1,6 @@
 name: Flutter Build and Release
 
-on:
-  push:
+on: push:
 name: Test, Build and Release apk
 permissions:
   contents: write
@@ -12,42 +11,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          flutter-version: '3.16.0' # Bạn có thể thay đổi phiên bản Flutter tùy thuộc vào dự án của bạn
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0' # Bạn có thể thay đổi phiên bản Flutter tùy thuộc vào dự án của bạn
 
-      - name: Install dependencies
-        run: flutter pub get
+    - name: Install dependencies
+      run: flutter pub get
 
-      - name: Build APK
-        run: flutter build apk
+    - name: Build APK
+      run: flutter build apk
 
-      - name: Archive artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-release
-          path: build/
-          if-no-files-found: error # Sẽ hiển thị lỗi nếu không tìm thấy file APK
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-release
+        path: build/
+      if-no-files-found: error # Sẽ hiển thị lỗi nếu không tìm thấy file APK
 
   release:
     needs: build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: app-release
-          path: build/
+    - name: Download artifacts
+      uses: actions/download-artifact@v2
+      with:
+        name: app-release
+        path: build/
 
-      - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
-        with:
-          files: |
-            build/app/outputs/flutter-apk/app-release.apk
-          token: ${{ secrets.GITHUB_TOKEN }}
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          build/app/outputs/flutter-apk/app-release.apk
+        token: ${{ secrets.GITHUB_TOKEN }}
