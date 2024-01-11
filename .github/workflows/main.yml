@@ -28,7 +28,6 @@ jobs:
       with:
         name: app-release
         path: build/
-      if-no-files-found: error # Sẽ hiển thị lỗi nếu không tìm thấy file APK
 
   release:
     needs: build

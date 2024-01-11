@@ -1,4 +1,5 @@
 #!/bin/bash -x
 git add .
 git commit -m "$1"
-git push origin $(git rev-parse --abbrev-ref HEAD)
+git tag v2.5
+git push origin v2.5
