@@ -2,8 +2,10 @@ name: Flutter Build and Release
 
 on:
   push:
-    branches:
-      - main
+name: Test, Build and Release apk
+permissions:
+  contents: write
+  discussions: write
 
 jobs:
   build:
