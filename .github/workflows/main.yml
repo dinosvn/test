@@ -1,5 +1,8 @@
 on: push
 name: Test, Build and Release apk
+permissions:
+  contents: write
+  discussions: write
 jobs:
   build:
     name: Build APK
