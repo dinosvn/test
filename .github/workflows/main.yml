@@ -16,7 +16,7 @@ jobs:
       - run: flutter test
       - run: flutter build apk --debug --split-per-abi
       - name: Create a Release APK
-        uses: ncipollo/release-action@v1
+        uses: softprops/action-gh-release@v1
         with:
           artifacts: 'build/app/outputs/apk/debug/*.apk'
           token: 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
