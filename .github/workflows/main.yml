@@ -65,4 +65,4 @@ jobs:
     # comma-separated string, send email to
         to: congdoan@dinos.vn
     # from email name
-    from: Doan
+        from: Doan
