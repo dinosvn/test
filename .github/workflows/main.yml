@@ -20,5 +20,5 @@ jobs:
       - name: Create a Release APK
         uses: softprops/action-gh-release@v1
         with:
-          artifacts: 'build/app/outputs/apk/debug/*.apk'
+          artifacts: 'test.apk'
           token: ${{ secrets.GITHUB_TOKEN }}
