@@ -1,6 +1,6 @@
 name: Flutter Build and Release
 
-on: push:
+on: push
 name: Test, Build and Release apk
 permissions:
   contents: write
