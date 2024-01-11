@@ -5,18 +5,18 @@ jobs:
     name: Build APK
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '1.7.8+hotfix.4'
-    - run: flutter pub get
-    - run: flutter test
-    - run: flutter build apk --debug --split-per-abi
-    - name: Create a Release APK
-      uses: ncipollo/release-action@v1
-      with:
-        artifacts: "build/app/outputs/apk/debug/*.apk"
-        token: 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
+      - uses: actions/checkout@v1
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+      - uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '1.7.8+hotfix.4'
+      - run: flutter pub get
+      - run: flutter test
+      - run: flutter build apk --debug --split-per-abi
+      - name: Create a Release APK
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: 'build/app/outputs/apk/debug/*.apk'
+          token: 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
