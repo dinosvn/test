@@ -11,58 +11,46 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Set up Flutter
-      uses: subosito/flutter-action@v2
+    - name: Send Telegram Notification to Group
+      uses: appleboy/telegram-action@v1
       with:
-        flutter-version: '3.16.0' # Bạn có thể thay đổi phiên bản Flutter tùy thuộc vào dự án của bạn
+        to: ${{ secrets.TELEGRAM_GROUP_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+        message: 'A new release is available for testing. Please download and test the APK.'
 
-    - name: Install dependencies
-      run: flutter pub get
+  #   - name: Set up Flutter
+  #     uses: subosito/flutter-action@v2
+  #     with:
+  #       flutter-version: '3.16.0' 
 
-    - name: Build APK
-      run: flutter build apk
+  #   - name: Install dependencies
+  #     run: flutter pub get
 
-    - name: Archive artifacts
-      uses: actions/upload-artifact@v2
-      with:
-        name: app-release
-        path: build/
+  #   - name: Build APK
+  #     run: flutter build apk
 
-  release:
-    needs: build
-    runs-on: ubuntu-latest
+  #   - name: Archive artifacts
+  #     uses: actions/upload-artifact@v2
+  #     with:
+  #       name: app-release
+  #       path: build/
 
-    steps:
-    - name: Download artifacts
-      uses: actions/download-artifact@v2
-      with:
-        name: app-release
-        path: build/
+  # release:
+  #   needs: build
+  #   runs-on: ubuntu-latest
 
-    - name: Create Release
-      id: create_release
-      uses: softprops/action-gh-release@v1
-      with:
-        files: |
-          build/app/outputs/flutter-apk/app-release.apk
-        token: ${{ secrets.GITHUB_TOKEN }}
+  #   steps:
+  #   - name: Download artifacts
+  #     uses: actions/download-artifact@v2
+  #     with:
+  #       name: app-release
+  #       path: build/
+
+  #   - name: Create Release
+  #     id: create_release
+  #     uses: softprops/action-gh-release@v1
+  #     with:
+  #       files: |
+  #         build/app/outputs/flutter-apk/app-release.apk
+  #       token: ${{ secrets.GITHUB_TOKEN }}
         
-    - name: Send mail
-      if: always()
-      uses: dawidd6/action-send-mail@v2
-      with:
-    # mail server settings
-        server_address: smtp.gmail.com
-        server_port: 465
-    # user credentials
-        username: ${{ secrets.EMAIL_USERNAME }}
-        password: ${{ secrets.EMAIL_PASSWORD }}
-    # email subject
-        subject: ${{ github.job }} job of ${{ github.repository }} has ${{ job.status }}
-    # email body as text
-        body: ${{ github.job }} job in worflow ${{ github.workflow }} of ${{ github.repository }} has ${{ job.status }}
-    # comma-separated string, send email to
-        to: congdoan@dinos.vn
-    # from email name
-        from: Doan
